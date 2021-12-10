@@ -1,0 +1,48 @@
+//
+// Protocol buffers definition
+//
+syntax = "proto3";
+package pt.tecnico.rec.grpc;
+
+message CtrlPingRequest {
+  string input = 1;
+}
+
+message CtrlPingResponse {
+	string output = 1;
+}
+
+message Tag {
+  int32 seq = 1;
+  int32 cid = 2;
+  int32 weight = 3;
+}
+
+message ReadRequest {
+  string key = 1;
+  int32 table = 2;
+  int32 column = 3;
+  Tag tag = 4;
+}
+
+message ReadResponse {
+  int32 value = 1;
+  Tag tag = 2;
+}
+
+message WriteRequest {
+  string key = 1; //id 
+  int32 table = 2; //station or user
+  int32 column = 3; //which attribute to change
+  int32 value = 4; //value to change
+  Tag tag = 5;
+}
+
+message WriteResponse {
+}
+  
+service RecordService {
+  rpc ctrl_ping(CtrlPingRequest) returns (CtrlPingResponse);
+  rpc read(ReadRequest) returns (ReadResponse);
+  rpc write(WriteRequest) returns (WriteResponse);
+}

@@ -1,0 +1,95 @@
+//
+// Protocol buffers definition
+//
+syntax = "proto3";
+package pt.tecnico.bicloin.hub.grpc;
+
+message CtrlPingRequest {
+  string input = 1;
+}
+
+message CtrlPingResponse {
+	string output = 1;
+}
+
+message BalanceRequest {
+  string user = 1;
+}
+
+message BalanceResponse {
+  int32 balance = 1;
+}
+
+message TopUpRequest {
+  string user = 1;
+  int32 amount = 2;
+  string phone = 3;
+}
+
+message TopUpResponse {
+  int32 balance = 1;  
+}
+
+message InfoStationRequest {
+  string station = 1; 
+}
+
+message InfoStationResponse {
+  string stationName = 1;
+  double latitude = 2;
+  double longitude = 3;
+  int32 numDocks = 4;
+  int32 prize = 5;
+  int32 numBicycles = 6;
+  int32 numPickups = 7;
+  int32 numDrops = 8;
+}
+
+message LocateStationRequest {
+  double latitude = 1;
+  double longitude = 2;
+  int32 k = 3;
+}
+  
+message LocateStationResponse {
+  repeated string stations = 1;
+}
+
+message BikeUpRequest {
+  string user = 1;
+  double latitude = 2;
+  double longitude = 3;
+  string station = 4;
+}
+
+message BikeUpResponse {
+}
+
+message BikeDownRequest {
+  string user = 1;
+  double latitude = 2;
+  double longitude = 3;
+  string station = 4;
+}
+
+message BikeDownResponse {
+}
+
+message SysStatusRequest {
+}
+
+message SysStatusResponse {
+  repeated string serverName = 1;
+  repeated bool isUp = 2;
+}
+
+service HubService {
+  rpc ctrl_ping(CtrlPingRequest) returns (CtrlPingResponse);
+  rpc balance(BalanceRequest) returns (BalanceResponse);
+  rpc top_up(TopUpRequest) returns (TopUpResponse);
+  rpc info_station(InfoStationRequest) returns (InfoStationResponse);
+  rpc locate_station(LocateStationRequest) returns (LocateStationResponse);
+  rpc bike_up(BikeUpRequest) returns (BikeUpResponse);
+  rpc bike_down(BikeDownRequest) returns (BikeDownResponse);
+  rpc sys_status(SysStatusRequest) returns (SysStatusResponse);
+}
